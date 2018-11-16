@@ -35,6 +35,9 @@ app.use('/mqtt', function (req, res) {
     proxy.web(req, res);
 });
 
+app.get('/mymqtt', function (req, res) {
+   res.send(process.env.CLOUDMQTT_URL);
+});
 
 const server = http.createServer(app);
 server.on('upgrade', function (req, socket, head) {
