@@ -3,8 +3,6 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const httpProxy = require('http-proxy');
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -19,14 +17,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-
-
-const proxy = httpProxy.createProxyServer({});
-// app.use('/', indexRouter);
-app.use('/mqtt', function (req, res) {
-    proxy.ws(req, res, { target: 'wss://aud.ssp.hinet.net:443/mqtt' });
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
